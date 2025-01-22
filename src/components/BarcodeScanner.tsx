@@ -75,7 +75,7 @@ const BarcodeScanner = () => {
                 type="text"
                 value={barcodeInput}
                 onChange={(e) => setBarcodeInput(e.target.value)}
-                placeholder="Entrez ou scannez un code-barres"
+                placeholder="Entrez barcode123"
                 className="w-full p-4 text-lg border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               {barcodeInput && (
