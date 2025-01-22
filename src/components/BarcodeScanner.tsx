@@ -1,13 +1,29 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Camera, Search, XCircle } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+
+interface Inventory {
+  total_quantity: number;
+  reserved_quantity: number;
+  available_quantity: number;
+}
+
+interface ScannedProduct {
+  barcode: string;
+  name: string;
+  description: string;
+  category: string;
+  stores: {
+    [storeId: string]: Inventory;
+  };
+}
 
 const BarcodeScanner = () => {
   const [barcodeInput, setBarcodeInput] = useState('');
   const [isScanning, setIsScanning] = useState(false);
-  const [scannedProduct, setScannedProduct] = useState<any>(null);
+  const [scannedProduct, setScannedProduct] = useState<ScannedProduct | null>(null);
 
-  const sampleProduct = {
+  const sampleProduct: ScannedProduct = {
     barcode: "barcode123",
     name: "Produit Example",
     description: "Description du produit",
@@ -16,9 +32,9 @@ const BarcodeScanner = () => {
       "store1": {
         total_quantity: 50,
         reserved_quantity: 2,
-        available_quantity: 48
-      }
-    }
+        available_quantity: 48,
+      },
+    },
   };
 
   const handleSearch = () => {
@@ -42,7 +58,7 @@ const BarcodeScanner = () => {
         <CardHeader>
           <CardTitle className="flex items-center justify-between text-xl font-semibold">
             Scanner de Code-barres
-            <button 
+            <button
               onClick={handleScanClick}
               className={`p-3 rounded-full transition ${
                 isScanning ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600'
@@ -63,7 +79,7 @@ const BarcodeScanner = () => {
                 className="w-full p-4 text-lg border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               {barcodeInput && (
-                <button 
+                <button
                   onClick={clearSearch}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
